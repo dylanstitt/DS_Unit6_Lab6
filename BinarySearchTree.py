@@ -69,6 +69,24 @@ class BinarySearchTree:
 
         return result
 
+    def get_min(self, node=None):
+        """Get min node value in tree"""
+        if node is None:
+            node = self.__root
+
+        while node._BinaryNode__left is not None:
+            node = node._BinaryNode__left
+        return node
+
+    def get_max(self, node=None):
+        """Get max node value in tree"""
+        if node is None:
+            node = self.__root
+
+        while node._BinaryNode__right is not None:
+            node = node._BinaryNode__right
+        return node
+
     def insert(self, value, currNode=None):
         """Add a value into the tree"""
         node = self.BinaryNode(value)
@@ -103,16 +121,83 @@ class BinarySearchTree:
             else:
                 self.insert(value, currNode=currNode._BinaryNode__right)
 
-    def get_min(self):
-        """Get min node value in tree"""
-        node = self.__root
-        while node._BinaryNode__left is not None:
-            node = node._BinaryNode__left
-        return node
+    def delete(self, value, currNode=None):
+        """Delete a value from the tree"""
+        if currNode is None:
+            currNode = self.__root
 
-    def get_max(self):
-        """Get max node value in tree"""
-        node = self.__root
-        while node._BinaryNode__right is not None:
-            node = node._BinaryNode__right
-        return node
+        if self.BinaryNode(value) < currNode:
+            self.delete(value, currNode=currNode._BinaryNode__left)
+        elif self.BinaryNode(value) > currNode:
+            self.delete(value, currNode=currNode._BinaryNode__right)
+        else:
+            parent = currNode._BinaryNode__parent
+            child = None
+
+            if currNode._BinaryNode__left is not None and currNode._BinaryNode__right is None:
+                child = currNode._BinaryNode__left
+            elif currNode._BinaryNode__right is not None and currNode._BinaryNode__left is None:
+                child = currNode._BinaryNode__right
+            elif currNode._BinaryNode__left is not None and currNode._BinaryNode__right is not None:
+                child = 2
+
+            if child is None:
+                # Zero Child
+                if currNode is parent._BinaryNode__left:
+                    parent._BinaryNode__left = child
+                else:
+                    parent._BinaryNode__right = child
+                self.__size -= 1
+
+            elif type(child) is self.BinaryNode:
+                # One Child
+                if currNode is parent._BinaryNode__left:
+                    parent._BinaryNode__left = child
+                else:
+                    parent._BinaryNode__right = child
+
+                child._BinaryNode__parent = parent
+                self.__size -= 1
+
+            else:
+                # Two Child
+                minNode = self.get_min(currNode._BinaryNode__right)
+                currNode._BinaryNode__value = minNode._BinaryNode__value
+                self.delete(minNode._BinaryNode__value, currNode=currNode._BinaryNode__right)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
