@@ -56,6 +56,9 @@ class BinarySearchTree:
         """Inorder tree traversal"""
         if node is None:
             node = self.__root
+            if node is None:
+                return []
+
         if result is None:
             result = []
 
@@ -126,9 +129,9 @@ class BinarySearchTree:
         if currNode is None:
             currNode = self.__root
 
-        if self.BinaryNode(value) < currNode:
+        if value < currNode._BinaryNode__value:
             self.delete(value, currNode=currNode._BinaryNode__left)
-        elif self.BinaryNode(value) > currNode:
+        elif value > currNode._BinaryNode__value:
             self.delete(value, currNode=currNode._BinaryNode__right)
         else:
             parent = currNode._BinaryNode__parent
@@ -143,6 +146,11 @@ class BinarySearchTree:
 
             if child is None:
                 # Zero Child
+                if currNode is self.__root:
+                    self.__root = None
+                    self.__size = 0
+                    return
+
                 if currNode is parent._BinaryNode__left:
                     parent._BinaryNode__left = child
                 else:

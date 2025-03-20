@@ -39,7 +39,7 @@ def main():
 
     # TEST 4 - Test docstrings
     # BEFORE TESTING: implement docstrings
-    #TEST_docs(BST, BinarySearchTree)
+    TEST_docs(BST, BinarySearchTree)
 
 if __name__ == "__main__":
     os.system("cls")
