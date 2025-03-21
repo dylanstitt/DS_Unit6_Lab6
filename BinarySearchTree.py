@@ -130,8 +130,12 @@ class BinarySearchTree:
             currNode = self.__root
 
         if value < currNode._BinaryNode__value:
+            if currNode._BinaryNode__left is None:
+                raise ValueError('Node is not present in tree')
             self.delete(value, currNode=currNode._BinaryNode__left)
         elif value > currNode._BinaryNode__value:
+            if currNode._BinaryNode__right is None:
+                raise ValueError('Node is not present in tree')
             self.delete(value, currNode=currNode._BinaryNode__right)
         else:
             parent = currNode._BinaryNode__parent
